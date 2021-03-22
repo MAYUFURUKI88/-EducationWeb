@@ -2,6 +2,7 @@ package com.rapideact.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,16 +32,34 @@ public class EmpServlet extends HttpServlet {
 		//セッションスコープ
 		HttpSession session = request.getSession();
 
-		//セッションスコープにempという名前でEmpインスタンスを保存
-		session.setAttribute("emp", emp);
+		//セッションスコープにempSesという名前でEmpインスタンスを保存
+		Emp empSes = new Emp("セッション", 10);
+		session.setAttribute("empSes", empSes);
 
 		//リダイレクト
+		response.sendRedirect("/EducationWeb/EmpServlet2");
 
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		//リクエストパラメータ取得
+		request.setCharacterEncoding("UTF-8");
+		String name = request.getParameter("name");
+		String age = request.getParameter("age");
+
+		//Empインスタンス作成
+		Emp emp = new Emp(name, Integer.parseInt(age));
+
+
+		//リクエストスコープへempという名前でEmpインスタンスを保存
+		request.setAttribute("emp", emp);
+
+		//フォワード
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/result.jsp");
+		rd.forward(request, response);
 
 	}
 
