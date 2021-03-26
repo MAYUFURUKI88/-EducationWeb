@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charser = UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.rapideact.model.Emp"%>
-
-<%
-Emp emp = (Emp) request.getAttribute("emp");
-Emp empSes = (Emp) session.getAttribute("empSes");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -16,40 +10,13 @@ Emp empSes = (Emp) session.getAttribute("empSes");
 <body>
 
 	<h1>リクエストスコープから取得</h1>
-	<%
-	if (emp != null) {
-	%>
-	<p>
-		名前：<%=emp.getName()%></p>
-	<p>
-		年齢：<%=emp.getAge()%></p>
-	<%
-	} else {
-	%>
-	<p>リクエストスコープ null</p>
-
-	<%
-	}
-	%>
+	<p>名前：${emp.name}</p>
+	<p>年齢：${emp.age}</p>
 
 
 	<h1>セッションスコープから取得</h1>
-	<%
-	if (empSes != null) {
-	%>
-	<p>
-		名前：<%=empSes.getName()%></p>
-	<p>
-		年齢：<%=empSes.getAge()%></p>
-	<%
-	} else {
-	%>
-	<p>セッションスコープ null</p>
-
-	<%
-	}
-	%>
-
+	<p>名前：${empSes.name}</p>
+	<p>年齢：${empSes.age}</p>
 
 </body>
 </html>
