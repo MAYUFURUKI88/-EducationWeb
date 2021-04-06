@@ -13,20 +13,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @WebFilter("/Practice5Servlet")
-public class Practice5Filter implements Filter{
+public class Practice5Filter implements Filter {
 
-	public void init(FilterConfig fConfig) throws ServletException{
-
+	public void init(FilterConfig fConfig) throws ServletException {
 
 	}
 
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
-		Integer count = 0;
-		HttpSession session = ((HttpServletRequest)request).getSession();
-		count++;
-		session.setAttribute("count", count);
-		session.setAttribute("test", (int)10);
+		// セッションから値を取り出す
+		HttpSession session = ((HttpServletRequest) request).getSession();
+		Object ct = session.getAttribute("count");
+		// 取り出した値をカウントアップする
+		if (ct == null) {
+			session.setAttribute("count", 1);
+		} else {
+			Integer fuurki = (int) ct;
+			fuurki++;
+			session.setAttribute("count", fuurki);
+		}
+
+
+		// 同じ名前でセッションに保存する
+
+		session.setAttribute("test", (int) 10);
 		chain.doFilter(request, response);
 
 	}
